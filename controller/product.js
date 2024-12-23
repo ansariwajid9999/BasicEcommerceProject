@@ -91,6 +91,7 @@ exports.replaceProduct = async (req, res) => {
 //   res.status(201).json(currentProduct);
 // };
 
+// This will hit C starter api from postman
 exports.deleteProduct = async (req, res) => {  
   try{
   const id = req.params.id;
