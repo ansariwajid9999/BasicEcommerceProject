@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controller/user");
 
-// router is replaced by server
 router
   .get("/", userController.getAllUsers)
   .get("/:id", userController.getUserById)
