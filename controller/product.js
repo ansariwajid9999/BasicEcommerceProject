@@ -75,13 +75,13 @@ exports.replaceProduct = async (req, res) => {
   const doc = await Product.findOneAndReplace({_id: id}, req.body);
   res.status(201).json(doc);
 };
-exports.updateProduct = (req, res) => {
-  const id = +req.params.id;
-  const productIndex = products.findIndex((p) => p.id === id);
-  const currentProduct = products[productIndex];
-  products.splice(productIndex, 1, { ...currentProduct, ...req.body });
-  res.status(201).json(req.body);
-};
+// exports.updateProduct = (req, res) => {
+//   const id = +req.params.id;
+//   const productIndex = products.findIndex((p) => p.id === id);
+//   const currentProduct = products[productIndex];
+//   products.splice(productIndex, 1, { ...currentProduct, ...req.body });
+//   res.status(201).json(req.body);
+// };
 // exports.deleteProduct = (req, res) => {
 //   const id = +req.params.id;
 //   const productIndex = products.findIndex((p) => p.id === id);

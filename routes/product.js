@@ -8,7 +8,7 @@ router
   // .get("/get", productController.getProductById)
   .post("/post", productController.addProduct)
   .put("/put/:id", productController.replaceProduct)
-  .patch("/patch/:id", productController.updateProduct)
+  //.patch("/patch/:id", productController.updateProduct)
   .delete("/delete/:id", productController.deleteProduct);
 
 exports.router = router
