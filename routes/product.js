@@ -4,6 +4,8 @@ const productController = require("../controller/product");
 
 router
   .get("/", productController.getAllProducts)
+  .get("/ssr", productController.getAllProductsSSR)
+  .get("/add", productController.getAddForm)
   .get("/:id", productController.getProductById)
   // .get("/get", productController.getProductById)
   .post("/post", productController.addProduct)
@@ -11,4 +13,4 @@ router
   //.patch("/patch/:id", productController.updateProduct)
   .delete("/delete/:id", productController.deleteProduct);
 
-exports.router = router
+exports.router = router;

@@ -1,8 +1,30 @@
 const fs = require("fs");
-const model = require('../model/product');
-const path = require('path');
-const mongoose = require('mongoose');
+const model = require("../model/product");
+const path = require("path");
+const mongoose = require("mongoose");
 const { error } = require("console");
+const ejs = require("ejs");
+
+// View
+exports.getAllProductsSSR = async (req, res) => {
+  const products = await Product.find();
+
+  ejs.renderFile(
+    path.resolve(__dirname, "../pages/index.ejs"),
+    { products: products },
+    function (err, str) {
+      res.send(str);
+    }
+  );
+};
+exports.getAddForm = async (req, res) => {
+  ejs.renderFile(
+    path.resolve(__dirname, "../pages/add.ejs"),
+    function (err, str) {
+      res.send(str);
+    }
+  );
+};
 
 const Product = model.Product;
 // const data = JSON.parse(fs.readFileSync(path.resolve(__dirname,"../data.json"), "utf-8"));
@@ -28,7 +50,7 @@ exports.getProductById = async (req, res) => {
     // const productById = await Product.findOne({ id: 4 });
     const productId = req.params.id;
     console.log(productId);
-    
+
     const productById = await Product.findById(productId);
     if (!productById) {
       return res.status(404).json({ error: "Product not found" });
@@ -44,14 +66,14 @@ exports.getProductById = async (req, res) => {
 //   res.json(req.body);
 // };
 exports.addProduct = async (req, res) => {
-  try{
+  try {
     // const product = new Product({
     //   title: "phoneX",
     //   description: "This phone is Samsung Galaxy S24 Ultra.",
     //   price: 10000,
     // });
 
-    const product = new Product(req.body);  
+    const product = new Product(req.body);
 
     const savedProduct = await product.save();
     console.log({ savedProduct });
@@ -62,7 +84,7 @@ exports.addProduct = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({err,  error: "Failed to save product" });
+    res.status(500).json({ err, error: "Failed to save product" });
   }
 };
 // exports.replaceProduct = (req, res) => {
@@ -73,7 +95,7 @@ exports.addProduct = async (req, res) => {
 // };
 exports.replaceProduct = async (req, res) => {
   const id = req.params.id;
-  const doc = await Product.findOneAndReplace({_id: id}, req.body);
+  const doc = await Product.findOneAndReplace({ _id: id }, req.body);
   res.status(201).json(doc);
 };
 // exports.updateProduct = (req, res) => {
@@ -91,14 +113,13 @@ exports.replaceProduct = async (req, res) => {
 //   res.status(201).json(currentProduct);
 // };
 
-exports.deleteProduct = async (req, res) => {  
-  try{
-  const id = req.params.id;
-  const doc = await Product.findOneAndDelete({_id:id})
-  res.status(201).json(doc);
-  }
-  catch(err){
+exports.deleteProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const doc = await Product.findOneAndDelete({ _id: id });
+    res.status(201).json(doc);
+  } catch (err) {
     console.log(err);
-    res.status(500).json({err, error: "failed to delete product"});
+    res.status(500).json({ err, error: "failed to delete product" });
   }
 };

@@ -22,6 +22,7 @@ async function main() {
 
 server.use(cors());
 server.use(express.json());
+server.use(express.urlencoded());
 server.use(morgan("default"));
 server.use(express.static(path.resolve(__dirname, process.env.PUBLIC_DIR)));
 server.use("/api/products", productRouter.router);
